@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  author: MyString
+  shelf: one
+  category_1: one
+  category_2: one
+  category_3: one
+  available: false
+
+two:
+  title: MyString
+  author: MyString
+  shelf: two
+  category_1: two
+  category_2: two
+  category_3: two
+  available: false
