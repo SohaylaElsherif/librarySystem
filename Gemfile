@@ -50,6 +50,8 @@ gem "bootsnap", require: false
 
 # For user authentication
 gem 'devise'
+#gem 'devise-jwt'
+#gem 'devise-two-factor'
 
 # For authorization with JSON Web Token (JWT)
 gem 'jwt'
@@ -72,6 +74,8 @@ gem 'kaminari'
 
 # For Admin interface
 gem 'activeadmin'
+gem 'cancancan'
+gem 'rotp'
 
 
 group :development, :test do

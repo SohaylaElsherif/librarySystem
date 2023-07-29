@@ -9,6 +9,10 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  config.warden do |manager|
+    manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
+  end
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -304,6 +308,7 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
+  ENV['OTP_SECRET_KEY'] = '4d6f1bd6a7608b0d0f81c54979b55e880d5b40ac9446354e59432f4c53dbd622746eb9af66305b57c369d98267b52301c37d6cb52c3a6efb47921278252aa355'
 
   # ==> Configuration for :registerable
 

@@ -2,6 +2,7 @@ module Api
   module V1
     class BooksController < ApplicationController
       before_action :set_book, only: [:show, :update, :destroy]
+      authorize_resource
 
       def index
         @q = Book.ransack(params[:q])
