@@ -56,8 +56,9 @@ gem 'jwt'
 
 # For attribute localization
 gem 'mobility'
-gem 'mobility-ransack'
-
+gem 'ransack'
+gem '', github: 'shioyama/mobility-ransack'
+gem 'acts_as_list', github: 'brendon/acts_as_list'
 # For JSON:API serialization
 gem 'jsonapi-serializer'
 
@@ -68,7 +69,6 @@ gem 'sidekiq'
 gem 'kaminari'
 
 # For sorting and reordering
-gem 'acts_as_list'
 
 # For Admin interface
 gem 'activeadmin'

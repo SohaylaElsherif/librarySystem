@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_28_102225) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_29_094600) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_102225) do
     t.boolean "available", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["category_1_id"], name: "index_books_on_category_1_id"
     t.index ["category_2_id"], name: "index_books_on_category_2_id"
     t.index ["category_3_id"], name: "index_books_on_category_3_id"

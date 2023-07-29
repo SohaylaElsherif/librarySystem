@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/brendon/acts_as_list.git
+  revision: f0daafb0251c48f1c7badfbd91043e8d59b48f21
+  specs:
+    acts_as_list (1.1.0)
+      activerecord (>= 4.2)
+
+GIT
+  remote: https://github.com/shioyama/mobility-ransack.git
+  revision: 142454c0a944581a9896ad1cb0b8ee33bd2885e3
+  specs:
+    mobility-ransack (1.2.2)
+      mobility (>= 1.0.1, < 2.0)
+      ransack (>= 1.8.0, < 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -75,8 +90,6 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    acts_as_list (1.1.0)
-      activerecord (>= 4.2)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     arbre (1.6.0)
@@ -170,9 +183,6 @@ GEM
     mobility (1.2.9)
       i18n (>= 0.6.10, < 2)
       request_store (~> 1.0)
-    mobility-ransack (1.2.2)
-      mobility (>= 1.0.1, < 2.0)
-      ransack (>= 1.8.0, < 5.0)
     msgpack (1.7.2)
     net-imap (0.3.7)
       date
@@ -300,7 +310,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
-  acts_as_list
+  acts_as_list!
   bootsnap
   capybara
   debug
@@ -311,10 +321,11 @@ DEPENDENCIES
   jwt
   kaminari
   mobility
-  mobility-ransack
+  mobility-ransack!
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.6)
+  ransack
   sassc-rails
   selenium-webdriver
   sidekiq

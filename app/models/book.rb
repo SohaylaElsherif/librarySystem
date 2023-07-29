@@ -9,5 +9,8 @@ class Book < ApplicationRecord
   validates :author, presence: true
   validates :shelf, presence: true
   validates :available, inclusion: { in: [true, false] }
+  def self.ransackable_attributes(auth_object = nil)
+    %w[author available category_1_id category_2_id category_3_id created_at id  shelf_id title updated_at]
+  end
 
 end
