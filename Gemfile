@@ -57,7 +57,7 @@ gem 'jwt'
 # For attribute localization
 gem 'mobility'
 gem 'ransack'
-gem '', github: 'shioyama/mobility-ransack'
+gem 'mobility-ransack', github: 'shioyama/mobility-ransack'
 gem 'acts_as_list', github: 'brendon/acts_as_list'
 # For JSON:API serialization
 gem 'jsonapi-serializer'
