@@ -22,7 +22,9 @@ class BorrowHistory < ApplicationRecord
       errors.add(:borrow_date, "can't be in the past ")
     end
   end
-
+  def self.ransackable_attributes(auth_object = nil)
+    ["book_id", "borrow_date", "borrowed_days", "created_at", "id", "return_date", "status", "updated_at", "user_id"]
+  end
   after_create :schedule_notification_job
 
   def schedule_notification_job

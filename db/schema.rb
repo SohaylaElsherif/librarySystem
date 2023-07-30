@@ -9,7 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
+that`s my schema `
 ActiveRecord::Schema[7.0].define(version: 2023_07_29_144218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,3 +126,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_29_144218) do
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end
+in 

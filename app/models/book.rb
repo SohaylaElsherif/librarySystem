@@ -10,9 +10,10 @@ class Book < ApplicationRecord
   validates :shelf, presence: true
   validates :available, inclusion: { in: [true, false] }
   def self.ransackable_attributes(auth_object = nil)
-    %w[author available category_1_id category_2_id category_3_id created_at id  shelf_id title  updated_at]
+    %w[author available category_1_id category_2_id category_3_id created_at id  shelf_id title  updated_at position]
   end
   def self.ransackable_associations(auth_object = nil)
     ["borrow_histories", "category_1", "category_2", "category_3", "reviews", "shelf"]
   end
+
 end
