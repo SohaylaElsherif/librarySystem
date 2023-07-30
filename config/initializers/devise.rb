@@ -9,8 +9,11 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+ # config.warden do |manager|
+  #  manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
+ # end
   config.warden do |manager|
-    manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
+    manager.default_strategies(:password, :rememberable, :trackable, :validatable)
   end
 
   # The secret key used by Devise. Devise uses this key to generate

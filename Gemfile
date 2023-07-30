@@ -66,6 +66,7 @@ gem 'jsonapi-serializer'
 
 # For background jobs
 gem 'sidekiq'
+gem 'whenever', require: false
 
 # For pagination
 gem 'kaminari'

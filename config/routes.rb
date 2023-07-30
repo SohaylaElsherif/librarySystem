@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
-      resources :books
+      resources :books do
+        post 'borrow', on: :member
+        patch 'return', on: :member
+      end
     end
   end
-
   # Defines the root path route ("/")
   post '/verify_otp', to: 'users/otp_verifications#create', as: 'verify_otp'
   root "home_page#index"
