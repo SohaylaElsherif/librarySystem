@@ -1,0 +1,28 @@
+<h1>PendingBorrowRequests#index</h1>
+<p>Find me in app/views/pending_borrow_requests/index.html.erb</p>
+<h1>Pending Borrow Requests</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Book ID</th>
+      <th>Borrow Date</th>
+      <th>Return Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pending_borrow_requests.each do |request| %>
+      <tr>
+        <td><%= request.book_id %></td>
+        <td><%= request.borrow_date %></td>
+        <td><%= request.return_date %></td>
+        <td>
+          <%= link_to 'Show', pending_borrow_request_path(request) %>
+          <%= link_to 'Edit', edit_pending_borrow_request_path(request) %>
+          <%= link_to 'Destroy', pending_borrow_request_path(request), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'New Borrow Request', new_pending_borrow_request_path %>

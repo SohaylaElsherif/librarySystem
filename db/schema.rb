@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_28_102225) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_01_230706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_102225) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pending_borrow_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.date "borrow_date"
+    t.date "return_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_pending_borrow_requests_on_book_id"
+    t.index ["user_id"], name: "index_pending_borrow_requests_on_user_id"
+  end
+
+  create_table "request_availabilities", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.date "borrow_date"
+    t.date "return_date"
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_request_availabilities_on_book_id"
+    t.index ["user_id"], name: "index_request_availabilities_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "book_id", null: false
@@ -101,6 +124,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_102225) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.date "dateOfBirth"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -111,6 +138,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_102225) do
   add_foreign_key "books", "shelves"
   add_foreign_key "borrow_histories", "books"
   add_foreign_key "borrow_histories", "users"
-  add_foreign_key "reviews", "books"
+
+  add_foreign_key "pending_borrow_requests", "books"
+  add_foreign_key "pending_borrow_requests", "users"
+  add_foreign_key "request_availabilities", "books"
+  add_foreign_key "request_availabilities", "users"
+ZZ  add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end
