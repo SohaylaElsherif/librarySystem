@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_28_092906) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_01_230706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,91 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_092906) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.bigint "shelf_id", null: false
+    t.bigint "category_1_id"
+    t.bigint "category_2_id"
+    t.bigint "category_3_id"
+    t.boolean "available", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "position"
+    t.index ["category_1_id"], name: "index_books_on_category_1_id"
+    t.index ["category_2_id"], name: "index_books_on_category_2_id"
+    t.index ["category_3_id"], name: "index_books_on_category_3_id"
+    t.index ["shelf_id"], name: "index_books_on_shelf_id"
+  end
+
+  create_table "borrow_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.date "borrow_date"
+    t.date "return_date"
+    t.integer "borrowed_days"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_borrow_histories_on_book_id"
+    t.index ["user_id"], name: "index_borrow_histories_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jwt_blacklists", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "exp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+  end
+
+  create_table "pending_borrow_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.date "borrow_date"
+    t.date "return_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_pending_borrow_requests_on_book_id"
+    t.index ["user_id"], name: "index_pending_borrow_requests_on_user_id"
+  end
+
+  create_table "request_availabilities", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.date "borrow_date"
+    t.date "return_date"
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_request_availabilities_on_book_id"
+    t.index ["user_id"], name: "index_request_availabilities_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.integer "rating"
+    t.text "comment"
+    t.string "review_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_reviews_on_book_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "shelves", force: :cascade do |t|
+    t.integer "number_of_books"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -48,8 +133,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_092906) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.date "dateOfBirth"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "books", "categories", column: "category_1_id"
+  add_foreign_key "books", "categories", column: "category_2_id"
+  add_foreign_key "books", "categories", column: "category_3_id"
+  add_foreign_key "books", "shelves"
+  add_foreign_key "borrow_histories", "books"
+  add_foreign_key "borrow_histories", "users"
+  add_foreign_key "pending_borrow_requests", "books"
+  add_foreign_key "pending_borrow_requests", "users"
+  add_foreign_key "request_availabilities", "books"
+  add_foreign_key "request_availabilities", "users"
+  add_foreign_key "reviews", "books"
+  add_foreign_key "reviews", "users"
 end
