@@ -7,10 +7,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :books
+      resources :pending_borrow_requests, only: [:index, :show, :create, :update, :destroy]
+    end
+  end
   get 'pending_borrow_requests/index'
   get 'pending_borrow_requests/create'
   get 'pending_borrow_requests/update'
   get 'pending_borrow_requests/destroy'
-  resources :pending_borrow_requests, only: [:index, :show, :create, :update, :destroy]
   root 'home_page#index'
 end
