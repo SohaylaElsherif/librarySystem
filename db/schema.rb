@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_230706) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_052952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_230706) do
     t.boolean "available", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["category_1_id"], name: "index_books_on_category_1_id"
     t.index ["category_2_id"], name: "index_books_on_category_2_id"
     t.index ["category_3_id"], name: "index_books_on_category_3_id"
@@ -73,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_230706) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "jwt_blacklists", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "exp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_blacklists_on_jti"
   end
 
   create_table "pending_borrow_requests", force: :cascade do |t|
@@ -138,11 +147,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_230706) do
   add_foreign_key "books", "shelves"
   add_foreign_key "borrow_histories", "books"
   add_foreign_key "borrow_histories", "users"
-
   add_foreign_key "pending_borrow_requests", "books"
   add_foreign_key "pending_borrow_requests", "users"
   add_foreign_key "request_availabilities", "books"
   add_foreign_key "request_availabilities", "users"
-ZZ  add_foreign_key "reviews", "books"
+  add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end

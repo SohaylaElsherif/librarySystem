@@ -1,6 +1,27 @@
 <h1>PendingBorrowRequests#index</h1>
 <p>Find me in app/views/pending_borrow_requests/index.html.erb</p>
-<h1>Pending Borrow Requests</h1>
+<h2>Pending Borrow Requests</h2>
+<% if @pending_borrow_requests.empty? %>
+<table>
+  <thead>
+    <tr>
+      <th>Book ID</th>
+      <th>Borrow Date</th>
+      <th>Return Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>        </td>
+      </tr>
+
+  </tbody>
+</table>
+<% else %>
 <table>
   <thead>
     <tr>
@@ -25,4 +46,24 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'New Borrow Request', new_pending_borrow_request_path %>
+<% end %>
+
+<%= form_with(model: @pending_borrow_request, url: pending_borrow_requests_path, local: true) do |form| %>
+  <div>
+    <%= form.label :book_id %>
+    <%= form.number_field :book_id %>
+  </div>
+  <div>
+    <%= form.label :borrow_date %>
+    <%= form.date_field :borrow_date %>
+  </div>
+  <div>
+    <%= form.label :return_date %>
+    <%= form.date_field :return_date %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<%= link_to 'New Borrow Request', pending_borrow_requests_create_path %>
+
