@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -6,8 +7,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :books
-    end
-  end
-  # Defines the root path route ("/")
-  root "home_page#index"
+  get 'pending_borrow_requests/index'
+  get 'pending_borrow_requests/create'
+  get 'pending_borrow_requests/update'
+  get 'pending_borrow_requests/destroy'
+  resources :pending_borrow_requests, only: [:index, :show, :create, :update, :destroy]
+  root 'home_page#index'
 end

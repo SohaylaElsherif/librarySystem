@@ -1,0 +1,21 @@
+<h1>PendingBorrowRequests#create</h1>
+<p>Find me in app/views/pending_borrow_requests/create.html.erb</p>
+<h1>New Borrow Request</h1>
+<%= form_with(model: @pending_borrow_request, url: pending_borrow_requests_path, local: true) do |form| %>
+  <div>
+    <%= form.label :book_id %>
+    <%= form.number_field :book_id %>
+  </div>
+  <div>
+    <%= form.label :borrow_date %>
+    <%= form.date_field :borrow_date %>
+  </div>
+  <div>
+    <%= form.label :return_date %>
+    <%= form.date_field :return_date %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<%= link_to 'Back', pending_borrow_requests_path %>
