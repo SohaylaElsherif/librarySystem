@@ -1,8 +1,7 @@
 
 class ApplicationController < ActionController::Base
-  include JsonWebToken
 
-    # Initialize configuration defaults for originally generated Rails version.
+  include JsonWebToken
     config.load_defaults 7.0
     skip_before_action :verify_authenticity_token
 
@@ -13,5 +12,4 @@ class ApplicationController < ActionController::Base
     def http_auth_header
       headers['Authorization'].split(' ').last if headers['Authorization'].present?
     end
-
 end
