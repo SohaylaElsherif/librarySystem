@@ -1,11 +1,7 @@
 module Api
   module V1
     class BooksController < ApplicationController
-      load_and_authorize_resource
-      before_action :set_book, only: [:show, :update, :destroy]
-      skip_before_action :verify_authenticity_token
-
-      authorize_resource
+      respond_to :json
 
       def index
         @q = Book.ransack(params[:q])

@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+    passwords: 'users/passwords',
+    confirmations: 'users/confirmations'
+  }  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
       resources :books
@@ -15,5 +19,6 @@ Rails.application.routes.draw do
   get 'pending_borrow_requests/create'
   get 'pending_borrow_requests/update'
   get 'pending_borrow_requests/destroy'
+  post '/verify_otp', to: 'users/otp_verifications#create', as: 'verify_otp'
   root 'home_page#index'
 end

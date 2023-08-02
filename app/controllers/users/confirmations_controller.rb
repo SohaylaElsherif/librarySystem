@@ -5,6 +5,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def new
   #   super
   # end
+  respond_to :json
 
   # POST /resource/confirmation
   # def create
@@ -15,7 +16,15 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def show
   #   super
   # end
+  def show
+    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 
+    if resource.errors.empty?
+      render json: { message: 'Email confirmed successfully.' }
+    else
+      render json: { error: 'Invalid confirmation token.' }, status: :unprocessable_entity
+    end
+  end
   # protected
 
   # The path used after resending confirmation instructions.

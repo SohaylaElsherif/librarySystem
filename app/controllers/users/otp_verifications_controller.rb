@@ -1,6 +1,6 @@
 class Users::OtpVerificationsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :create
-
+  before_action :authenticate_user!
+  respond_to :json
   def create
     # Find the user based on the provided email or any other identifier
     user = User.find_by(email: params[:email])

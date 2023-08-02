@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Users::PasswordsController < Devise::PasswordsController
-  skip_before_action :verify_authenticity_token, only: [:create , :update ]
+  before_action :authenticate_user!
   respond_to :json
 
 

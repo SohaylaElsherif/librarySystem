@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  skip_before_action :verify_authenticity_token, only: [:create]
 
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
@@ -18,7 +17,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # Generate the OTP code
       otp_code = ROTP::TOTP.new(user.otp_secret).now
 
-      # For demonstration purposes, let's assume we'll print the OTP code in the console
       puts "Your OTP code: #{otp_code}"
 
       # Modify the response to return JSON with the OTP code
