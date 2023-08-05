@@ -1,19 +1,36 @@
 ActiveAdmin.register BorrowHistory do
-  actions :all, except: :destroy
+  permit_params :status
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-   permit_params :user_id, :book_id, :borrow_date, :return_date, :borrowed_days, :status
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:user_id, :book_id, :borrow_date, :return_date, :borrowed_days, :status]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  index do
+    selectable_column
+    id_column
+    column :user
+    column :book
+    column :borrow_date
+    column :return_date
+    column :status
+    actions
+  end
 
+  form do |f|
+    f.semantic_errors
+    f.inputs do
+      f.input :status, as: :select, collection: BorrowHistory.statuses.keys
+    end
+    f.actions
+  end
+
+  member_action :send_status_notification, method: :put do
+    borrow_history = BorrowHistory.find(params[:id])
+    if borrow_history.update(status: params[:status])
+      NotificationMailer.borrow_status_change(borrow_history.user, borrow_history.status).deliver_now
+      redirect_to admin_borrow_history_path(borrow_history), notice: 'Status updated successfully and notification sent.'
+    else
+      redirect_to admin_borrow_history_path(borrow_history), alert: 'Failed to update status.'
+    end
+  end
+
+  action_item :update_status, only: :show do
+    link_to 'Update Status', send_status_notification_admin_borrow_history_path(borrow_history), method: :put
+  end
 end
