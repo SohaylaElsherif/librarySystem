@@ -4,7 +4,7 @@ class Api::V1::BorrowHistoriesController < ApplicationController
   before_action :authenticate_user!
 
   def index 
-    @borrow_history = current_user.pending_borrow_requests
+    borrow_history = current_user.pending_borrow_requests
     respond_to do |format|
       format.html # render index.html.erb
       format.json { render json: borrow_history, status: :ok }
@@ -13,13 +13,12 @@ class Api::V1::BorrowHistoriesController < ApplicationController
 
   def create
     borrow_history = BorrowHistory.new(borrow_history_params.merge(user_id: current_user.id))
+    borrow_history.status = "pending"
     respond_to do |format|
       if borrow_history.save
-        send_custom_notification(borrow_history)
-        format.html #{ redirect_to , notice: 'Pending borrow request was successfully created.' }
+       # send_custom_notification(borrow_history)
         format.json { render json: borrow_history, status: :created }
       else
-        format.html { render :new }
         format.json { render json: { errors: borrow_history.errors.full_messages }, status: :unprocessable_entity }
       end
     end

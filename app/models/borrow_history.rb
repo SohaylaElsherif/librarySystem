@@ -11,7 +11,7 @@ class BorrowHistory < ApplicationRecord
   validates :user, presence: true
   validates :book, presence: true
   validates :borrow_date, presence: true
-  validates :status, presence: true, inclusion: { in: ['pending', 'accepted', 'rejected', 'borrowed', 'done'] }
+  validates :status, inclusion: { in: ['pending', 'accepted', 'rejected', 'borrowed', 'done'] }
   validate :borrow_date_cannot_be_in_past
   validate :check_date_range_with_accepted_or_done
 
@@ -33,11 +33,12 @@ class BorrowHistory < ApplicationRecord
     ["book_id", "borrow_date", "borrowed_days", "created_at", "id", "return_date", "status", "updated_at", "user_id"]
   end
 
-  before_validation :set_defaults
-
-  after_create :schedule_notification_job
+  after_save :schedule_notification_job
 
   def schedule_notification_job
-    NotificationWorker.perform_in(return_date - Time.zone.now, id) if return_date > Time.zone.now
-  end
+    time_difference = (return_date - Time.zone.now).to_i
+    delay = time_difference > 0 ? time_difference : 0
+  
+    NotificationWorkerJob.perform_in(delay, id)
+    end
 end
