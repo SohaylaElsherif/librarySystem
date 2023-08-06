@@ -4,33 +4,32 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  respond_to :json
 
-  def create
-    user = User.new(sign_up_params)
+      respond_to :json
 
-    if user.save
-      # Generate OTP secret and save it to the user's otp_secret field
-      user.otp_secret = ROTP::Base32.random_base32
-      user.save
+      def create
+        build_resource(sign_up_params)
 
-      # Generate the OTP code
-      otp_code = ROTP::TOTP.new(user.otp_secret).now
+        if resource.valid? && verify_otp && resource.save
+          puts resource.otp_secret
+          render json: { message: 'User successfully registered' }, status: :created
+        else
+          render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
 
-      puts "Your OTP code: #{otp_code}"
+      private
 
-      # Modify the response to return JSON with the OTP code
-      render json: { message: 'User registered successfully. Please verify OTP.', otp_code: otp_code }, status: :created
-    else
-      render json: user.errors, status: :unprocessable_entity
-    end
-  end
+      def sign_up_params
+        params.require(:user).permit(:email, :password, :password_confirmation)
+      end
 
-  private
+      def verify_otp
+        resource.generate_otp
+        true
+      end
 
-  def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
-  end
+
 
 
 

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PendingBorrowRequestTest < ActiveSupport::TestCase
+class BookCategoryTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

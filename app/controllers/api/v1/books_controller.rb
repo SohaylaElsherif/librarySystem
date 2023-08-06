@@ -1,3 +1,4 @@
+
 module Api
   module V1
     class BooksController < ApplicationController
@@ -8,12 +9,18 @@ module Api
 
         # Dynamically handle filtering based on provided parameters
         books = if params[:q].present?
-          @q.result.includes(:category_1, :category_2, :category_3, :shelf)
-               .order(:position)
-               .page(params[:page])
-               .per(params[:per_page])
+          categories = params[:q][:categories_in].split(',') if params[:q][:categories_in].present?
+
+          filtered_books = @q.result.includes(:categories, :shelf)
+
+          # Filter books by multiple categories if categories parameter is provided
+          filtered_books = filtered_books.joins(:categories).merge(Category.where(id: categories)) if categories.present?
+
+          filtered_books.order(:position)
+                       .page(params[:page])
+                       .per(params[:per_page])
         else
-          Book.includes(:category_1, :category_2, :category_3, :shelf)
+          Book.includes(:categories, :shelf)
               .order(:position)
               .page(params[:page])
               .per(params[:per_page])
@@ -27,7 +34,6 @@ module Api
 
         render json: books
       end
-
       def show
         render json: @book
       end
@@ -74,7 +80,7 @@ module Api
       end
 
       def book_params
-        params.require(:book).permit(:title, :author, :shelf_id, :category_1_id, :category_2_id, :category_3_id, :reviews, :available)
+        params.require(:book).permit(:title, :author, :shelf_id, :category_ids, :reviews, :available)
       end
     end
   end

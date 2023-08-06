@@ -12,9 +12,9 @@ Devise.setup do |config|
  # config.warden do |manager|
   #  manager.default_strategies(:scope => :user).unshift :two_factor_authenticatable
  # end
-  config.warden do |manager|
-    manager.default_strategies(:password, :rememberable, :trackable, :validatable)
-  end
+ # config.warden do |manager|
+  #  manager.default_strategies(:password, :rememberable, :trackable, :validatable)
+  #end
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -76,7 +76,7 @@ Devise.setup do |config|
   # It can be set to an array that will enable params authentication only for the
   # given strategies, for example, `config.params_authenticatable = [:database]` will
   # enable it only for database (email + password) authentication.
-  ##############################################################config.params_authenticatable = true
+  config.params_authenticatable = true
 
   # Tell if authentication through HTTP Auth is enabled. False by default.
   # It can be set to an array that will enable http authentication only for the
@@ -86,7 +86,7 @@ Devise.setup do |config|
   # enable this with :database unless you are using a custom strategy.
   # The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-  # config.http_authenticatable = false
+  config.http_authenticatable = true
 
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -116,7 +116,7 @@ Devise.setup do |config|
   # This can reduce the time taken to boot the app but if your application
   # requires the Devise mappings to be loaded during boot time the application
   # won't boot properly.
-  ################################################config.reload_routes = true
+  config.reload_routes = true
 
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 12. If
@@ -167,11 +167,11 @@ Devise.setup do |config|
   config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
-   config.confirmation_keys = [:email]
+   config.confirmation_keys = [:otp_secret]
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+   #config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   #config.expire_all_remember_me_on_sign_out = true
@@ -320,7 +320,7 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
-  ENV['OTP_SECRET_KEY'] = '4d6f1bd6a7608b0d0f81c54979b55e880d5b40ac9446354e59432f4c53dbd622746eb9af66305b57c369d98267b52301c37d6cb52c3a6efb47921278252aa355'
+ # ENV['OTP_SECRET_KEY'] = '4d6f1bd6a7608b0d0f81c54979b55e880d5b40ac9446354e59432f4c53dbd622746eb9af66305b57c369d98267b52301c37d6cb52c3a6efb47921278252aa355'
 
   # ==> Configuration for :registerable
 
@@ -328,3 +328,4 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
    config.sign_in_after_change_password = true
 end
+

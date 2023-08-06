@@ -4,15 +4,17 @@ class Users::PasswordsController < Devise::PasswordsController
   respond_to :json
 
 
+
   def create
     self.resource = resource_class.send_reset_password_instructions(resource_params)
 
     if successfully_sent?(resource)
-      render json: { message: 'Reset password instructions have been sent to your email.' }
+      render json: { message: 'Reset password instructions sent' }, status: :ok
     else
-      render json: { error: 'Failed to send reset password instructions.' }, status: :unprocessable_entity
+      render json: { error: 'Failed to send reset password instructions' }, status: :unprocessable_entity
     end
   end
+
 
   # PATCH /users/password
   def update
@@ -57,4 +59,9 @@ class Users::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+  private
+
+  def resource_params
+    params.require(:user).permit(:email)
+  end
 end

@@ -1,19 +1,44 @@
 class Book < ApplicationRecord
   belongs_to :shelf
-  belongs_to :category_1, class_name: 'Category', foreign_key: 'category_1_id', optional: true
-  belongs_to :category_2, class_name: 'Category', foreign_key: 'category_2_id', optional: true
-  belongs_to :category_3, class_name: 'Category', foreign_key: 'category_3_id', optional: true
   has_many :borrow_histories
   has_many :reviews
+  has_many :book_categories
+  has_many :categories, through: :book_categories
+
   validates :title, presence: true
   validates :author, presence: true
-  validates :shelf, presence: true
   validates :available, inclusion: { in: [true, false] }
+
+  validate :ensure_shelf_limit, if: -> {self.shelf_id.present? && self.shelf_id_changed?}
+
+ # before_create :assign_shelf_and_category
+  #railsbefore_validation :set_defaults
+
   def self.ransackable_attributes(auth_object = nil)
-    %w[author available category_1_id category_2_id category_3_id created_at id  shelf_id title  updated_at position]
-  end
-  def self.ransackable_associations(auth_object = nil)
-    ["borrow_histories", "category_1", "category_2", "category_3", "reviews", "shelf"]
+    %w[author available created_at id title updated_at position]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["borrow_histories", "categories", "reviews", "shelf"]
+  end
+
+  def ensure_shelf_limit
+    errors.add(:shelf_id, "no space") if self.class.where(shelf_id: self.shelf_id).where.not(id: self.id).count >= 5
+  end
+
+  private
+  # def assign_shelf
+  #   # Assign a shelf with less than 5 books or create a new shelf
+  #   self.shelf = Shelf.where("number_of_books < ?", 5).first_or_create
+  #   # Increment the number_of_books of the assigned shelf
+  #   self.shelf.save
+  # end
+  # def assign_category(category_ids)
+  #   self.update!(category_ids: category_ids)
+  # end
+
+  #  def set_defaults
+  #   shelf = assign_shelf
+  #   categories = assign_category(category_ids)
+  # end
 end
