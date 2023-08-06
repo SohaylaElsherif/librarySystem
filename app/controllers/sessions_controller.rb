@@ -28,4 +28,13 @@ class SessionsController < ApplicationController
       render json: { error: 'Invalid token or user not found' }, status: :unprocessable_entity
     end
   end
+  def verify_otp
+    user = User.find_by(email: params[:user_email])
+
+    if user && user.valid_otp?(params[:otp_secret])
+      render json: { message: 'OTP successfully verified' }, status: :ok
+    else
+      render json: { error: 'Invalid OTP or user not found' }, status: :unprocessable_entity
+    end
+  end
 end

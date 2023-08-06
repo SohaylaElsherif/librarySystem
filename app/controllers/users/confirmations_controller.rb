@@ -16,8 +16,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def show
   #   super
   # end
-  def show
-    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
+  def create
+    self.resource = resource_class.confirm_by_token(params[:otp_secret])
 
     if resource.errors.empty?
       render json: { message: 'Email confirmed successfully.' }
