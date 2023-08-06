@@ -28,8 +28,6 @@ class Ability
 
       can :destroy, User
 
-      can :read, namespace_name: "api"
-
      return if user.present?
       can :read, Book
       can :create, BorrowHistory
@@ -38,6 +36,7 @@ class Ability
       can :update, Review
       can :create, Review
       can :destroy, Review
+      can :read, namespace_name: "api"
 
   end
 end

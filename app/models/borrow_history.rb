@@ -1,5 +1,4 @@
 class BorrowHistory < ApplicationRecord
-
   belongs_to :user
   belongs_to :book
   enum status: {
@@ -7,15 +6,23 @@ class BorrowHistory < ApplicationRecord
     accepted: 'accepted',
     rejected: 'rejected',
     borrowed: 'borrowed',
-    late: 'late',
     done: 'done'
   }
   validates :user, presence: true
   validates :book, presence: true
   validates :borrow_date, presence: true
-  validates :status, presence: true, inclusion: { in: ['pending', 'accepted', 'rejected', 'borrowed', 'late', 'done'] }
+  validates :status, presence: true, inclusion: { in: ['pending', 'accepted', 'rejected', 'borrowed', 'done'] }
   validate :borrow_date_cannot_be_in_past
+  validate :check_date_range_with_accepted_or_done
 
+
+  # Custom validation method to check date range with accepted or done status
+  def check_date_range_with_accepted_or_done
+    overlapping_borrows = BorrowHistory.where('(borrow_date, return_date) overlaps (?, ?)', borrow_date, return_date)
+                               .where(status: ['accepted', 'done'])
+                               .where.not(id: id) 
+    errors.add(:base, 'Book already borrowed or accepted for the selected date range') if overlapping_borrows.exists?
+  end
 
   def borrow_date_cannot_be_in_past
     if borrow_date.present? && borrow_date < Date.today

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_052952) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_05_164351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_052952) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "admin_id"
     t.index ["book_id"], name: "index_borrow_histories_on_book_id"
     t.index ["user_id"], name: "index_borrow_histories_on_user_id"
   end
@@ -76,12 +77,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_052952) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "jwt_blacklists", force: :cascade do |t|
-    t.string "jti"
-    t.datetime "exp"
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "admin_user_id", null: false
+    t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+    t.index ["admin_user_id"], name: "index_notifications_on_admin_user_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "pending_borrow_requests", force: :cascade do |t|
@@ -133,9 +136,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_052952) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "otp_secret"
-    t.integer "consumed_timestep"
-    t.boolean "otp_required_for_login"
     t.date "dateOfBirth"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -147,6 +147,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_052952) do
   add_foreign_key "books", "shelves"
   add_foreign_key "borrow_histories", "books"
   add_foreign_key "borrow_histories", "users"
+  add_foreign_key "notifications", "admin_users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "pending_borrow_requests", "books"
   add_foreign_key "pending_borrow_requests", "users"
   add_foreign_key "request_availabilities", "books"
