@@ -1,0 +1,9 @@
+ar:
+  books:
+    title: "العنوان"
+    author: "الكاتب"
+    category: "النوع"
+  errors:
+    record_invalid: "فشل التحقق: %{errors}"
+    not_found: "السجل غير موجود"
+    unprocessable_entity: "كيان غير قابل للمعالجة: %{errors}"

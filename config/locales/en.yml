@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+  books:
+    title: "Title"
+    author: "Author"
+    category: "Category"
+  errors:
+    record_invalid: "Validation failed: %{errors}"
+    not_found: "Record not found"
+    unprocessable_entity: "Unprocessable entity: %{errors}"

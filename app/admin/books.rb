@@ -1,4 +1,5 @@
 ActiveAdmin.register Book do
+  
   permit_params :title, :author, :available, :position , category_ids: []
   index do
     selectable_column

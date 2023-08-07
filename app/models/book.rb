@@ -8,6 +8,14 @@ class Book < ApplicationRecord
   validates :title, presence: true
   validates :author, presence: true
   validates :available, inclusion: { in: [true, false] }
+  validates :localized_title, presence: true
+  validates :localized_author, presence: true
+  validates :localized_category, presence: true
+
+  # Keep the existing title and author attributes for compatibility
+  alias_attribute :title, :localized_title
+  alias_attribute :author, :localized_author
+  alias_attribute :category, :localized_category
 
   validate :ensure_shelf_limit, if: -> {self.shelf_id.present? && self.shelf_id_changed?}
 
@@ -19,7 +27,7 @@ class Book < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["borrow_histories", "categories", "reviews", "shelf"]
+    ["borrow_histories", "book_categories", "reviews", "shelf" ,]
   end
 
   def ensure_shelf_limit
