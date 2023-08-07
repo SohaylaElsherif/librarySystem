@@ -7,6 +7,8 @@ ActiveAdmin.register BorrowHistory do
   # Uncomment all parameters which should be permitted for assignment
   #
    permit_params :user_id, :book_id, :borrow_date, :return_date, :borrowed_days, :status
+
+
   #
   # or
   #

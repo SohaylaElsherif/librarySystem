@@ -5,8 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-AdminUser.create!(email: 'admin@yahoo.com', password: '123456', password_confirmation: '123456') if Rails.env.development?
-Category.create(name: "Fiction")
-Category.create(name: "Science Fiction")
-Category.create(name: "Fantasy")
-Category.create(name: "Mystery")
+AdminUser.create!(email: 'admin5@yahoo.com', password: '123456', password_confirmation: '123456') if Rails.env.development?
+Category.create(name: "Fiction", localized_name: "خيال")
+Category.create(name: "Science Fiction", localized_name: "خيال علمي")
+Category.create(name: "Fantasy" , localized_name: "فانتازيا")
+Category.create(name: "Mystery" , localized_name: "غموض")
