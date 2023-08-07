@@ -4,13 +4,13 @@ module Api
       respond_to :json
 
       def index
-        @q = Book.ransack(params[:q])
+        @filter_by = Book.ransack(params[:filter_by])
 
         # Dynamically handle filtering based on provided parameters
-        books = if params[:q].present?
-          categories = params[:q][:categories_in].split(',') if params[:q][:categories_in].present?
+        books = if params[:filter_by].present?
+          categories = params[:filter_by][:categories_in].split(',') if params[:filter_by][:categories_in].present?
 
-          filtered_books = @q.result.includes(:categories, :shelf)
+          filtered_books = @filter_by.result.includes(:categories, :shelf)
 
           # Filter books by multiple categories if categories parameter is provided
           filtered_books = filtered_books.joins(:categories).merge(Category.where(id: categories)) if categories.present?
@@ -26,8 +26,8 @@ module Api
         end
 
         # Dynamically handle sorting based on provided sort parameter
-        if params[:q].present? && params[:q][:s].present?
-          sort_param = params[:q][:s]
+        if params[:filter_by].present? && params[:filter_by][:sort_by].present?
+          sort_param = params[:filter_by][:sort_by]
           books = books.joins(:reviews).reorder(sort_param)
         end
 
