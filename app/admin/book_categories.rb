@@ -6,6 +6,7 @@ ActiveAdmin.register BookCategory do
   # Uncomment all parameters which should be permitted for assignment
   #
    permit_params :book_id, :category_id
+   
   #
   # or
   #

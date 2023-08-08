@@ -14,7 +14,6 @@ Rails.application.routes.draw do
       resources :borrow_histories, only: [:index, :show, :create, :update, :destroy]
     end
   end
-
   post '/verify_otp', to: 'users/otp_verifications#create', as: 'verify_otp'
   root 'home_page#index'
 end

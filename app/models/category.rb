@@ -6,7 +6,7 @@ class Category < ApplicationRecord
   alias_attribute :name, :localized_name
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "id", "name","localized_name", "updated_at"]
+    ["created_at", "id", "name","localized_name", "updated_at" ,"book_id"]
     end
     def self.ransackable_associations(auth_object = nil)
       ["book_categories", "books"]

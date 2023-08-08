@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
 
-    return unless user.admin?
+    return if user.admin?
      can :manage, :all
       cannot :edit, Review
       cannot :update, Review
@@ -15,6 +15,7 @@ class Ability
       can :update, BorrowHistory
       cannot :destroy, BorrowHistory
 
+      can :manage, BookCategory
 
 
       can :manage, Book, shelf_id: user.available_shelf_ids
@@ -25,7 +26,7 @@ class Ability
       can :edit, Category
       can :update, Category
       can :destroy, Category
-
+      can :read, all
       can :destroy, User
 
      return if user.present?
