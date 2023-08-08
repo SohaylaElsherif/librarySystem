@@ -21,12 +21,23 @@ module Api::V1::BorrowHistoriesHelper
     end
   end
 
-  def schedule_notification_job
-    time_difference = (return_date - Time.zone.now).to_i
-    delay = time_difference > 0 ? time_difference : 0
 
-    NotificationWorkerJob.perform_in(delay, id)
-    end
+  #def schedule_notifications
+   # if status == 'accepted' && borrow_date == Date.today
+    #  BorrowAcceptedNotificationJob.perform_async(id)
+    #end
+
+    #if status == 'accepted' || status == 'borrowed'
+     # BorrowReturnNotificationJob.perform_at(return_date.tomorrow, id)
+    #end
+ # end
+
+  #def schedule_notification_job
+  #  time_difference = (return_date - Time.zone.now).to_i
+  #  delay = time_difference > 0 ? time_difference : 0
+
+   # NotificationWorkerJob.perform_in(delay, id)
+    #end
 
 
     def set_borrow_history

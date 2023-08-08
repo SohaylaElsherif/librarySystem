@@ -12,6 +12,9 @@ module LibrarySystem
     config.load_defaults 7.0
     config.autoload_paths << Rails.root.join('lib')
     SECRET_KEY = Rails.application.credentials.secret_key_base
+    config.active_job.queue_adapter = :sidekiq
+
+    config.autoload_paths += %W(#{config.root}/app/workers)
     config.i18n.available_locales = [:en, :ar]
     config.i18n.default_locale = :en
     # Configuration for the application, engines, and railties goes here.

@@ -1,4 +1,5 @@
 class Notification < ApplicationRecord
+  before_action :set_notification, only: [:show, :edit, :update, :destroy]
   belongs_to :user
   belongs_to :admin_users
   validates :message, presence: true
@@ -7,3 +8,5 @@ class Notification < ApplicationRecord
   end
 
 end
+
+

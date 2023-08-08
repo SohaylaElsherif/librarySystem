@@ -29,7 +29,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem 'redis'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -61,13 +61,14 @@ gem 'jwt'
 # For attribute localization
 gem 'mobility'
 gem 'ransack'
+
 gem 'mobility-ransack', github: 'shioyama/mobility-ransack'
 gem 'acts_as_list', github: 'brendon/acts_as_list'
 # For JSON:API serialization
 gem 'jsonapi-serializer'
 
 # For background jobs
-gem 'sidekiq'
+gem 'sidekiq', '<6'
 gem 'whenever', require: false
 
 # For pagination
@@ -79,7 +80,6 @@ gem 'kaminari'
 gem 'activeadmin'
 gem 'cancancan'
 gem 'rotp'
-
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
