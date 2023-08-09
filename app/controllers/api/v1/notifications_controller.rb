@@ -1,4 +1,5 @@
-class NotificationsController < ApplicationController
+class Api::V1::NotificationsController < ApplicationController
+  include Api::V1::NotificationsHelper
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
 
   def index

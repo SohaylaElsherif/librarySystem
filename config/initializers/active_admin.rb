@@ -50,7 +50,7 @@ ActiveAdmin.setup do |config|
   #   config.default_namespace = false
   #
   # Default:
-  # config.default_namespace = :admin
+   config.default_namespace = :admin
   #
   # You can customize the settings for each namespace by using
   # a namespace block. For example, to change the site title
@@ -92,7 +92,7 @@ ActiveAdmin.setup do |config|
   # config.pundit_policy_namespace = :admin
 
   # You can customize your CanCan Ability class name here.
-  # config.cancan_ability_class = "Ability"
+  #config.cancan_ability_class = "Ability"
 
   # You can specify a method to be called on unauthorized access.
   # This is necessary in order to prevent a redirect loop which happens
@@ -185,7 +185,7 @@ ActiveAdmin.setup do |config|
   # You can run `bin/rails runner 'puts I18n.t("date.formats")'` to see the
   # available formats in your application.
   #
-  config.localize_format = :long
+  config.localize_format = :short
 
   # == Setting a Favicon
   #
@@ -288,11 +288,11 @@ ActiveAdmin.setup do |config|
   # Pagination is enabled by default for all resources.
   # You can control the default per page count for all resources here.
   #
-  # config.default_per_page = 30
+   config.default_per_page = 30
   #
   # You can control the max per page count too.
   #
-  # config.max_per_page = 10_000
+   config.max_per_page = 10_000
 
   # == Filters
   #

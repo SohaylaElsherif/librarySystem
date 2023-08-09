@@ -15,8 +15,12 @@ module LibrarySystem
     config.active_job.queue_adapter = :sidekiq
 
     config.autoload_paths += %W(#{config.root}/app/workers)
+
+    config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
     config.i18n.available_locales = [:en, :ar]
-    config.i18n.default_locale = :en
+
+  config.i18n.default_locale = :en
+
     # Configuration for the application, engines, and railties goes here.
 
     # These settings can be overridden in specific environments using the files

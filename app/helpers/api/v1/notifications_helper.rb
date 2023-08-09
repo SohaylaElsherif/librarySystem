@@ -1,4 +1,4 @@
-module NotificationsHelper
+module Api::V1::NotificationsHelper
 
   def set_notification
     @notification = Notification.find(params[:id])
@@ -13,5 +13,5 @@ module NotificationsHelper
   def notification_params
     params.require(:notification).permit(:user_id, :admin_user_id, :message)
   end
-  
+
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  scope "(:locale)", locale: /en|ar/ do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -10,16 +11,24 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :books
       resources :borrow_histories, only: [:index, :show, :create, :update, :destroy]
+      resources :reviews, only: [:create, :update, :index]
+      resources :notifications, only: [:index, :show]
+
     end
   end
 
   post '/verify_otp', to: 'users/otp_verifications#create', as: 'verify_otp'
 
-  # User Notifications
-  resources :notifications, only: [:index, :show]
+  root to: "library/home_page#index"
 
+  namespace :library, path: "/" do
+    resources :books
 
-  root 'home_page#index'
+    # Now we have params[:locale] available
+    # in our controllers and views
+    root to: "home_page#index"
+    end
+
+  end
 end

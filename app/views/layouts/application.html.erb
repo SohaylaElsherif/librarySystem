@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
     <title>LibrarySystem</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -18,7 +18,18 @@
       <p class="alert"><%= alert %></p>
     <% end %>
 
-  <body>
+ <body>
+    <ul>
+      <% I18n.available_locales.each do |locale| %>
+        <% if I18n.locale != locale %>
+          <li>
+            <%= link_to t(".lang.#{locale}"), url_for(locale: locale) %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+
     <%= yield %>
   </body>
+
 </html>

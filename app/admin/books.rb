@@ -1,5 +1,5 @@
 ActiveAdmin.register Book do
-  permit_params :title, :author, :shelf_id, :available, :position,category_ids: []
+  permit_params :title, :author, :shelf_id, :available, category_ids: []
 
   index do
     selectable_column
@@ -8,7 +8,6 @@ ActiveAdmin.register Book do
     column :author
     column :shelf
     column :available
-    column :position
     actions
   end
 
@@ -23,7 +22,6 @@ ActiveAdmin.register Book do
       f.input :title
       f.input :author
       f.input :available
-      f.input :position
       f.input :shelf
       f.input :categories, as: :check_boxes, collection: Category.pluck(:name, :id)
     end

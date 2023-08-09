@@ -1,5 +1,6 @@
 class BorrowHistory < ApplicationRecord
   include Api::V1::BorrowHistoriesHelper
+  extend Mobility
 
   belongs_to :user
   belongs_to :book
@@ -19,7 +20,14 @@ class BorrowHistory < ApplicationRecord
   before_create :check_date_range_with_accepted_or_done
 
   after_commit :schedule_status_change_and_notifications, on: :update, if: :saved_change_to_status?
+  after_commit :schedule_review_creation_job, on: :update, if: :saved_change_to_status?
 
+  def schedule_review_creation_job
+    if status == 'borrowed' && return_date == Date.today
+      ReviewCreationWorker.perform_in(1.day, id)
+    end
+  end
+  
   def self.ransackable_attributes(auth_object = nil)
     ["book_id", "borrow_date","approved_by", "admin_user_id","borrowed_days","created_at", "id", "return_date", "status", "updated_at", "user_id"]
   end
@@ -37,6 +45,7 @@ class BorrowHistory < ApplicationRecord
       delay = time_difference
       BorrowHistoryWorker.perform_in(delay, id)
     end
+
   end
  # after_commit :schedule_notification_job
 

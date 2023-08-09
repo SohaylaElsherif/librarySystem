@@ -1,4 +1,5 @@
 class Book < ApplicationRecord
+  extend Mobility
 
   belongs_to :shelf
   has_many :borrow_histories
@@ -8,12 +9,14 @@ class Book < ApplicationRecord
   validates :title, presence: true
   validates :author, presence: true
   validates :available, inclusion: { in: [true, false] }
-  validates :localized_title, presence: true
-  validates :localized_author, presence: true
+  validates :rating, presence: true, inclusion: { in: 1..5 }
+  after_update :calcutate_rate
+  #validates :localized_title, presence: true
+  #validates :localized_author, presence: true
 
   # Keep the existing title and author attributes for compatibility
-  alias_attribute :title, :localized_title
-  alias_attribute :author, :localized_author
+  #alias_attribute :title, :localized_title
+  #alias_attribute :author, :localized_author
 
   validate :ensure_shelf_limit, if: -> {self.shelf_id.present? && self.shelf_id_changed?}
   def ensure_shelf_limit
@@ -36,7 +39,8 @@ class Book < ApplicationRecord
     errors.add(:shelf_id, "no space") if self.class.where(shelf_id: self.shelf_id).where.not(id: self.id).count >= 5
   end
 
-
+  translates :title, type: :string, locale_accessors: I18n.available_locales
+  translates :author,  type: :string, locale_accessors: I18n.available_locales
 
   # def assign_shelf
   #   # Assign a shelf with less than 5 books or create a new shelf

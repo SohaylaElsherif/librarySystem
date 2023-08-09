@@ -1,5 +1,6 @@
 
 <nav>
+
   <% if user_signed_in? %>
     <%= link_to 'Change Password', edit_user_registration_path %>
     <%= link_to "Borrow Request", pending_borrow_requests_index_path %>
@@ -10,6 +11,5 @@
     <%= link_to 'Register', new_user_registration_path %>
   <% end %>
 </nav>
-
-<h1>Welcome to our Library System</h1>
+<h1><%= t(".greet") %></h1>
 <p>This is the home page of our Library System.</p>

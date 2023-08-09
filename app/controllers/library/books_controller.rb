@@ -1,5 +1,5 @@
-module Api
-  module V1
+module Library
+
     class BooksController < ApplicationController
       respond_to :json
 
@@ -34,6 +34,8 @@ module Api
         render json: books
       end
       def show
+        @book = Book.find(params[:id])
+        @reviews = Review.for_book(@book)
         render json: @book
       end
 
@@ -48,4 +50,4 @@ module Api
       end
     end
   end
-end
+
