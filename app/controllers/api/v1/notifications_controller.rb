@@ -1,6 +1,6 @@
-class Api::V1::NotificationsController < ApplicationController
+class Api::V1::NotificationsController < BaseController
   include Api::V1::NotificationsHelper
-  before_action :set_notification, only: [:show, :edit, :update, :destroy]
+  before_action :set_notification, only: [:show, :destroy]
 
   def index
     if current_user.is_a?(User)

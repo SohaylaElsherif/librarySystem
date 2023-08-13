@@ -137,4 +137,5 @@ ar:
       block: "قائمة"
       grid: "شبكة"
       blog: "مدونة"
-
+  errors:
+    book_not_found: "الكتاب غير موجود"

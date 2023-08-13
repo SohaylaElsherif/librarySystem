@@ -202,3 +202,5 @@ ar:
       block: "List"
       grid: "Grid"
       blog: "Blog"
+  errors:
+    book_not_found: "Book not found"

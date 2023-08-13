@@ -1,7 +1,6 @@
-class Api::V1::ReviewsController < ApplicationController
+class Api::V1::ReviewsController < BaseController
   include Api::V1::ReviewsHelper
 
-  before_action :authenticate_user!
   before_action :set_review, only: [:update]
 
   def create

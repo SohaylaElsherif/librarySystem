@@ -1,8 +1,6 @@
-class Api::V1::BorrowHistoriesController < ApplicationController
-  include JsonWebToken
+class Api::V1::BorrowHistoriesController < BaseController
   include Api::V1::BorrowHistoriesHelper
   respond_to :json
-  before_action :authenticate_user!
 
   def index
     @borrow_histories = current_user.borrow_histories

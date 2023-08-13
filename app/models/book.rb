@@ -6,54 +6,15 @@ class Book < ApplicationRecord
   has_many :reviews
   has_many :book_categories
   has_many :categories, through: :book_categories
-  validates :title, presence: true
-  validates :author, presence: true
-  validates :available, inclusion: { in: [true, false] }
-  validates :rating, presence: true, inclusion: { in: 1..5 }
-  after_update :calcutate_rate
-  #validates :localized_title, presence: true
-  #validates :localized_author, presence: true
 
-  # Keep the existing title and author attributes for compatibility
-  #alias_attribute :title, :localized_title
-  #alias_attribute :author, :localized_author
-
-  validate :ensure_shelf_limit, if: -> {self.shelf_id.present? && self.shelf_id_changed?}
-  def ensure_shelf_limit
-    errors.add(:shelf_id, "no space") if self.class.where(shelf_id: self.shelf_id).where.not(id: self.id).count >= 5
-  end
-
-
- # before_create :assign_shelf_and_category
-  #railsbefore_validation :set_defaults
-
-  def self.ransackable_attributes(auth_object = nil)
-    ["author", "available", "created_at" , "id" , "title" , "updated_at", "position" ,"localized_title","localized_author" ]
-  end
-
-  def self.ransackable_associations(auth_object = nil)
-    ["borrow_histories", "book_categories", "reviews", "shelf" ,"categories"]
-  end
-
-  def ensure_shelf_limit
-    errors.add(:shelf_id, "no space") if self.class.where(shelf_id: self.shelf_id).where.not(id: self.id).count >= 5
-  end
+  validates_presence_of :title, :author
+  validates_inclusion_of :available, in: [true, false]
+  validates_inclusion_of :rating, in: 0..5
 
   translates :title, type: :string, locale_accessors: I18n.available_locales
-  translates :author,  type: :string, locale_accessors: I18n.available_locales
+  translates :author, type: :string, locale_accessors: I18n.available_locales
 
-  # def assign_shelf
-  #   # Assign a shelf with less than 5 books or create a new shelf
-  #   self.shelf = Shelf.where("number_of_books < ?", 5).first_or_create
-  #   # Increment the number_of_books of the assigned shelf
-  #   self.shelf.save
-  # end
-  # def assign_category(category_ids)
-  #   self.update!(category_ids: category_ids)
-  # end
+  after_update :calculate_rate_and_review_count
 
-  #  def set_defaults
-  #   shelf = assign_shelf
-  #   categories = assign_category(category_ids)
-  # end
+  validate :ensure_shelf_limit, if: -> { self.shelf_id.present? && self.shelf_id_changed? }
 end
