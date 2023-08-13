@@ -1,7 +1,8 @@
+module Api
+
 class Users::OtpVerificationsController < ApplicationController
   respond_to :json
   include JsonWebToken
-
   def create
     user = User.find_by(email: params[:user_email])
     if user
@@ -22,4 +23,5 @@ class Users::OtpVerificationsController < ApplicationController
       render json: { error: 'User not found' }, status: :not_found
     end
   end
+end
 end

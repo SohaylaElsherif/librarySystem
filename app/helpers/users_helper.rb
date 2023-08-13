@@ -3,9 +3,6 @@ module UsersHelper
     self.otp_secret = rand(1000..9999).to_s.rjust(4, '0')
   end
 
-  # Custom validation for password complexity
-
-  private
 
   def password_complexity
     return if password.blank? || password =~ /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/

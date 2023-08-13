@@ -70,7 +70,9 @@ gem 'jsonapi-serializer'
 # For background jobs
 gem 'sidekiq', '<6'
 gem 'whenever', require: false
-
+#to generate dumy data for testing
+gem 'rest-client'
+gem 'faker'
 # For pagination
 gem 'kaminari'
 

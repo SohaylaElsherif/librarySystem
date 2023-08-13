@@ -1,8 +1,7 @@
 
 class ApplicationController < ActionController::Base
-  include Library
+  include Api
 
-  include JsonWebToken
    include ActionController::Helpers
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -17,18 +16,15 @@ def default_url_options
 end
 
 
-    config.load_defaults 7.0
-    skip_before_action :verify_authenticity_token
+  config.load_defaults 7.0
+  skip_before_action :verify_authenticity_token
 
-    def decoded_auth_token
-      decoded_auth_token ||= JsonWebToken.decode(http_auth_header)
-        end
+  def decoded_auth_token
+    decoded_auth_token ||= JsonWebToken.decode(http_auth_header)
+  end
 
-    def http_auth_header
-      headers['Authorization'].split(' ').last if headers['Authorization'].present?
-    end
-
-
+  def http_auth_header
+    headers['Authorization'].split(' ').last if headers['Authorization'].present?
+  end
 
 end
-

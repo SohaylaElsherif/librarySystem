@@ -4,8 +4,8 @@ class Api::V1::ReviewsController < BaseController
   before_action :set_review, only: [:update]
 
   def create
-    review = Review.new(review_params)
-    review.review_type = "user-book"
+    review = build_user_book_review(review_params)
+
     if review.save
       render json: review, status: :created
     else
@@ -14,7 +14,6 @@ class Api::V1::ReviewsController < BaseController
   end
 
   def update
-    review = Review.find(params[:id])
     if @review.update(review_params)
       render json: @review, status: :ok
     else

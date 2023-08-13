@@ -1,11 +1,11 @@
 class Api::V1::BorrowHistoriesController < BaseController
   include Api::V1::BorrowHistoriesHelper
+  before_action :set_borrow_history, only: [:show, :destroy]
   respond_to :json
 
   def index
     @borrow_histories = current_user.borrow_histories
     respond_to do |format|
-      format.html # render index.html.erb
       format.json { render json: @borrow_histories, status: :ok }
     end
   end
@@ -26,39 +26,37 @@ class Api::V1::BorrowHistoriesController < BaseController
   end
 
   def show
-    begin
-      borrow_history = current_user.borrow_histories.find(params[:id])
-      respond_to do |format|
-        format.html # render show.html.erb
-        format.json { render json: borrow_history, status: :ok }
-      end
-    rescue ActiveRecord::RecordNotFound => e
-      respond_to do |format|
-        format.json { render json: { errors: [t('errors.not_found')] }, status: :not_found }
-      end
-    rescue => e
-      respond_to do |format|
-        format.json { render json: { errors: [t('errors.unprocessable_entity', errors: e.message)] }, status: :unprocessable_entity }
-      end
+    respond_to do |format|
+      format.json { render json: @borrow_history, status: :ok }
+    end
+  rescue ActiveRecord::RecordNotFound => e
+    respond_to do |format|
+      format.json { render json: { errors: [t('errors.not_found')] }, status: :not_found }
+    end
+  rescue => e
+    respond_to do |format|
+      format.json { render json: { errors: [t('errors.unprocessable_entity', errors: e.message)] }, status: :unprocessable_entity }
     end
   end
 
   def destroy
-    begin
-      borrow_history = current_user.borrow_histories.find(params[:id])
-      borrow_history.destroy
-      respond_to do |format|
-        format.json { head :no_content }
-      end
-    rescue ActiveRecord::RecordNotFound => e
-      respond_to do |format|
-        format.json { render json: { errors: [t('errors.not_found')] }, status: :not_found }
-      end
-    rescue => e
-      respond_to do |format|
-        format.json { render json: { errors: [t('errors.unprocessable_entity', errors: e.message)] }, status: :unprocessable_entity }
-      end
+    @borrow_history.destroy
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  rescue ActiveRecord::RecordNotFound => e
+    respond_to do |format|
+      format.json { render json: { errors: [t('errors.not_found')] }, status: :not_found }
+    end
+  rescue => e
+    respond_to do |format|
+      format.json { render json: { errors: [t('errors.unprocessable_entity', errors: e.message)] }, status: :unprocessable_entity }
     end
   end
 
+  private
+
+  def set_borrow_history
+    @borrow_history = current_user.borrow_histories.find(params[:id])
+  end
 end

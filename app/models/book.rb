@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
+  include BooksHelper
+
   extend Mobility
 
   belongs_to :shelf
@@ -17,4 +19,5 @@ class Book < ApplicationRecord
   after_update :calculate_rate_and_review_count
 
   validate :ensure_shelf_limit, if: -> { self.shelf_id.present? && self.shelf_id_changed? }
+
 end

@@ -202,5 +202,8 @@ ar:
       block: "List"
       grid: "Grid"
       blog: "Blog"
-  errors:
+errors:
     book_not_found: "Book not found"
+    record_invalid: "Validation failed: %{errors}"
+    unprocessable_entity: "Unprocessable entity: %{errors}"
+    not_found: "Record not found"

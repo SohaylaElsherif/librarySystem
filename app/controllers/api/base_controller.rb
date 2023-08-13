@@ -1,7 +1,6 @@
-module Library
+module Api
   class BaseController < ApplicationController
-    layout "library"
-
+    layout "api"
 
   end
 end

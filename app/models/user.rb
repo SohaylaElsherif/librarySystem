@@ -8,12 +8,7 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :notifications
   validate :password_complexity
+  before_create :generate_otp
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["consumed_timestep", "created_at", "email", "encrypted_password", "id", "otp_required_for_login", "otp_secret", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at"]
-    end
-    def self.ransackable_associations(auth_object = nil)
-      ["borrow_histories", "reviews" ,"notifications"]
-    end
+
 end
-

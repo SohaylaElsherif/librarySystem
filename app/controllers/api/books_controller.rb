@@ -1,5 +1,4 @@
-module Library
-
+module Api
     class BooksController < BaseController
       include BooksHelper
     before_action :set_book, only: [:show, :update, :destroy]
@@ -38,6 +37,5 @@ module Library
 #      head :no_content
 #    end
 
-   
   end
 end

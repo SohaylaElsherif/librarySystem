@@ -137,5 +137,8 @@ ar:
       block: "قائمة"
       grid: "شبكة"
       blog: "مدونة"
-  errors:
+errors:
     book_not_found: "الكتاب غير موجود"
+    record_invalid: "فشل التحقق: %{errors}"
+    unprocessable_entity: "كيان غير قابل للمعالجة: %{errors}"
+    not_found: "السجل غير موجود"

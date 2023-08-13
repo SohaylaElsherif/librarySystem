@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-AdminUser.create!(email: 'admin__sohayla@yahoo.com', password: '123456', password_confirmation: '123456') if Rails.env.development?
+#AdminUser.create!(email: 'admin__samr@yahoo.com', password: '123456', password_confirmation: '123456') if Rails.env.development?
 require 'rest-client'
 require 'json'
 require 'faker'
@@ -16,22 +16,9 @@ def fetch_data(url)
   JSON.parse(response.body)
 end
 
-# Seed data for categories with translations
-categories_data = [
-  { name: 'Fiction', translations: { en: 'Fiction', ar: 'خيال' } },
-  { name: 'Non-Fiction', translations: { en: 'Non-Fiction', ar: 'غير خيالي' } },
-  { name: 'Science Fiction', translations: { en: 'Science Fiction', ar: 'خيال علمي' } },
-  { name: 'Fantasy', translations: { en: 'Fantasy', ar: 'فانتازيا' } },
-  { name: 'Mystery', translations: { en: 'Mystery', ar: 'غموض' } }
-]
 
-categories = categories_data.map do |category|
-  Category.create!(category[:translations])
-end
 
-shelves = Shelf.create!(shelves_data)
-# Fetch book data from the Open Library API
-open_library_url = 'https://openlibrary.org/subjects/Fiction.json'  # You can change the subject as needed
+open_library_url = 'https://openlibrary.org/subjects/Fiction.json'
 book_data = fetch_data(open_library_url)
 
 # Create sample Book records from the API data
@@ -93,9 +80,8 @@ borrow_histories_data = users.flat_map do |user|
     {
       user: user,
       book: book,
-      borrow_date: Date.today - rand(1..30),
-      return_date: Date.today - rand(31..60),
-      borrowed_days: rand(1..30),
+      borrow_date: Date.today - rand(1..5),
+      return_date: Date.today - rand(6..12),
       status: rand(0..1)
     }
   end
@@ -115,4 +101,3 @@ users.each do |user|
   end
 end
 Review.create!(reviews_data)
-

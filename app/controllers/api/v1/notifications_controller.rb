@@ -27,16 +27,6 @@ class Api::V1::NotificationsController < BaseController
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @notification.update(notification_params)
-      redirect_to @notification, notice: 'Notification was successfully updated.'
-    else
-      render :edit
-    end
-  end
 
   def destroy
     @notification.destroy

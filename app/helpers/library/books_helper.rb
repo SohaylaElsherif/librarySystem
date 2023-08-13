@@ -80,7 +80,7 @@ module Library
 
       (reviews.sum(:rating) / reviews.count.to_f) * 5
     end
-  end
+
 
 
   def calculate_rate_and_review_count
@@ -88,17 +88,9 @@ module Library
     self.rating = (reviews.sum(:rating) / reviewcount.to_f) * 5 unless reviewcount.zero?
     save
   end
- def ensure_shelf_limit
-    errors.add(:shelf_id, "no space") if self.class.where(shelf_id: self.shelf_id).where.not(id: self.id).count >= 5
-  end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["author", "available", "created_at" , "id" , "title" , "updated_at", "position" ,"localized_title","localized_author" ]
-  end
 
-  def self.ransackable_associations(auth_object = nil)
-    ["borrow_histories", "book_categories", "reviews", "shelf" ,"categories"]
-  end
+
     def set_book
       @book = Book.find(params[:id])
     end
@@ -106,4 +98,5 @@ module Library
     def book_params
       params.require(:book).permit(:title, :author, :shelf_id, :category_ids, :available, :rating)
     end
+end
 end
