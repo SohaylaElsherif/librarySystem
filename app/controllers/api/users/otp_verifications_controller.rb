@@ -3,6 +3,8 @@ module Api
 class Users::OtpVerificationsController < ApplicationController
   respond_to :json
   include JsonWebToken
+  def index
+  end
   def create
     user = User.find_by(email: params[:user_email])
     if user

@@ -1,4 +1,6 @@
 module Api::V1::ReviewsHelper
+  extend ActiveSupport::Concern
+
   def set_review
     @review = current_user.reviews.find(params[:id])
   end

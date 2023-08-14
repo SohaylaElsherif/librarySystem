@@ -14,6 +14,7 @@ ar:
     record_invalid: "فشل التحقق: %{errors}"
     not_found: "السجل غير موجود"
     unprocessable_entity: "كيان غير قابل للمعالجة: %{errors}"
+    
   active_admin:
     dashboard: "لوحة تحكم"
     dashboard_welcome:
@@ -137,8 +138,4 @@ ar:
       block: "قائمة"
       grid: "شبكة"
       blog: "مدونة"
-errors:
-    book_not_found: "الكتاب غير موجود"
-    record_invalid: "فشل التحقق: %{errors}"
-    unprocessable_entity: "كيان غير قابل للمعالجة: %{errors}"
-    not_found: "السجل غير موجود"
+

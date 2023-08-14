@@ -135,6 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_13_083234) do
     t.datetime "updated_at", null: false
     t.integer "max"
   end
+  rails generate serializer User
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

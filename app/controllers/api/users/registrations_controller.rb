@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 module Api
-  module V1
     class Users::RegistrationsController < Devise::RegistrationsController
       include JsonWebToken
       respond_to :json
@@ -24,12 +23,13 @@ module Api
       def generate_token_and_return(user)
         token = JsonWebToken.encode({ user_id: user.id, email: user.email })
         send_otp_verification(user)
-        render json: { message: 'User successfully registered', token: token }, status: :created
+        redirect_to api_verify_otp_path , allow_other_host: true
+      #  render json: { message: 'User successfully registered , confirm your email ', otp_code: user.otp_secret }, status: :created
       end
 
       def send_otp_verification(user)
-        UserMailer.send_otp_secret_email(resource).deliver_now
+  #      UserMailer.send_otp_secret_email(resource).deliver_now
+   puts user.otp_secret
       end
     end
-  end
 end
