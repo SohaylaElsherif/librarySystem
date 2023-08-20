@@ -4,7 +4,7 @@ module Api
   api_endpoints = {
     "users": {
       "register_user": {
-        "url": "http://localhost:3000/en/api/users/sign_up",
+        "url": "http://localhost:3000/en/api/users",
         "method": "POST",
         "description": "Register a new user",
         "request_body": {
@@ -27,11 +27,11 @@ module Api
         }
       },
       "verify_otp": {
-        "url": "http://localhost:3000/verify_otp",
+        "url": "http://localhost:3000/en/api/users/verify_otp",
         "method": "POST",
         "description": "Verify OTP for user registration",
         "request_body": {
-          "user_email": "user@example.com",
+          "email": "user@example.com",
           "otp_code": "123456"
         }
       },
@@ -136,18 +136,23 @@ module Api
         "description": "Show details of a notification for current user"
       }
     },
-    "books": {
-      "list_all_books": {
-        "url": "http://localhost:3000/api/books",
-        "method": "GET",
-        "description": "List all books"
-      },
-      "show_book": {
-        "url": "http://localhost:3000/api/books/:id",
-        "method": "GET",
-        "description": "Show details of a book"
-      }
-    },
+"books": {
+  "list_all_books": {
+    "url": "http://localhost:3000/api/books",
+    "method": "GET",
+    "description": "List all books"
+  },
+  "filter_order_books": {
+    "url": "http://localhost:3000/api/books?filter_by[title_cont]=Harry&filter_by[author_cont]=Rowling&filter_by[categories_in]=1,2&filter_by[shelf_id_eq]=3&filter_by[sort_by]=highest_rated",
+    "method": "GET",
+    "description": "Filter books by name, author, categories, and shelf, ordered by highest rated"
+  },
+  "show_book": {
+    "url": "http://localhost:3000/api/books/:id",
+    "method": "GET",
+    "description": "Show details of a book"
+  }
+},
     "home_page": {
       "home": {
         "url": "http://localhost:3000/",

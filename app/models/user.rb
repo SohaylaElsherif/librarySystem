@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :validatable
+  
+  self.inheritance_column = :user_type
 
   has_many :borrow_histories
   has_many :reviews

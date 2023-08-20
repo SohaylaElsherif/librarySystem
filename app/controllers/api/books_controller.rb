@@ -4,10 +4,17 @@ module Api
     before_action :set_book, only: [:show, :update, :destroy]
     before_action :authenticate_user!, except: [:index, :show]
     #before_action :authorize_admin, only: [:create, :update, :destroy]
-    def index
-      books = filter_and_sort_books(params)
-      render json: books, each_serializer: BookSerializer
-    end
+  def index
+  if params.empty? || params[:filter_by].blank?
+    books = Book.includes(:categories, :shelf).order(:position)
+                .page(params[:page])
+                .per(params[:per_page])
+  else
+    books = filter_and_sort_books(params)
+  end
+
+  render json: books, each_serializer: BookSerializer
+end
 
     def show
       render json: @book, serializer: BookSerializer

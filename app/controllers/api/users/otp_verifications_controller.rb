@@ -6,8 +6,9 @@ class Users::OtpVerificationsController < ApplicationController
   def index
   end
   def create
-    user = User.find_by(email: params[:user_email])
-    if user
+user = User.find_by(email: params[:email])
+
+   if user
       # Check if the entered OTP matches the OTP stored in the user's record
       entered_otp = params[:otp_code]
       stored_otp = user[:otp_secret]

@@ -1,6 +1,6 @@
 class BookSerializer
   include JSONAPI::Serializer
-
+ attribute :title
   attribute :title do |book|
     localized_attribute(book, :title)
   end
