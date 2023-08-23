@@ -26,3 +26,5 @@ Supports internationalization with customizable date and time formatting using D
  Utilizes PostgreSQL as the database for efficient data storage and retrieval.
 ### Testing:
 The API functionalities are thoroughly tested using a comprehensive Postman collection to ensure proper functioning and to handle different scenarios.
+=======
+This repository contains  a comprehensive library management system built using Ruby on Rails. The API provides a robust set of endpoints to manage books, users, borrowing, book reviews, and more.
