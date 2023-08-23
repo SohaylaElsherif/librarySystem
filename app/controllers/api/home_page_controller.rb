@@ -16,7 +16,7 @@ module Api
         }
       },
       "login_user": {
-        "url": "http://localhost:3000/api/users/sign_in",
+        "url": "http://localhost:3000/en/api/users/sign_in",
         "method": "POST",
         "description": "Login a user",
         "request_body": {
@@ -27,7 +27,7 @@ module Api
         }
       },
       "verify_otp": {
-        "url": "http://localhost:3000/en/api/users/verify_otp",
+        "url": "http://localhost:3000/ar/api/users/verify_otp",
         "method": "POST",
         "description": "Verify OTP for user registration",
         "request_body": {

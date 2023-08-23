@@ -2,9 +2,8 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /en|ar/ do
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
-  
+
     namespace :api do
-      post 'users/verify_otp', to: 'users/otp_verifications#create', as: 'verify_otp'
 
       devise_for :users, controllers: {
         registrations: 'api/users/registrations',
@@ -18,6 +17,8 @@ Rails.application.routes.draw do
         end
        resources :books , only: [:index, :show]
       end
+      post 'users/verify_otp', to: 'users/otp_verifications#create'
+
     end
 
 

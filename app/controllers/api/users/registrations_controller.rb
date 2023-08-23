@@ -5,14 +5,18 @@ module Api
       respond_to :json
 
       def create
-        @user=User.new(sign_up_params)
-
-        if user.valid?  &&  @user.save!
-          generate_token_and_return(user)
-        else
-          render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-        end
+        begin
+        @user = User.create(sign_up_params)
+        @user.save!
+        generate_token_and_return(@user)
+      rescue => e
+        return response_record_error(@user) if @user&.errors&.any?
+        return response_record_error(@device) if @device&.errors&.any?
+        raise ExceptionHandler::UnprocessableEntity.new(error: e.message, message: e.message)
       end
+    end
+
+
 
       private
 

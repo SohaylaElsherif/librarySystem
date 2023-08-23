@@ -1,11 +1,15 @@
 
 class ApplicationController < ActionController::Base
   include Api
-
+  include ResponseHelper
+  include ParamsHelper
+  include ExceptionHandler
    include ActionController::Helpers
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
-
+  rescue_from 'MyAppError::Base' do |exception|
+    render xml: exception, status: 500
+  end
 
 
 def default_url_options
